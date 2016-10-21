@@ -7,7 +7,7 @@ ARCH="all"
 MAINTAINER="Luca Baldesi <luca.baldesi@unitn.it>"
 DESC="XWizard is xrandr based service for automatic configuration of monitors"
 BUILD_DIRS="usr/ etc/"
-DEPS=""
+DEPS="lightdm systemd"
 # more conf fields are available, check:
 # http://www.debian.org/doc/debian-policy/ch-controlfields.html
 
