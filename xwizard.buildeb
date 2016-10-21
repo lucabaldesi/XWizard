@@ -1,0 +1,46 @@
+#!/bin/bash
+PKG="XWizard"
+VER="0.0.1"
+SECTION="user/hidden"
+PRIORITY="Optional"
+ARCH="all"
+MAINTAINER="Luca Baldesi <luca.baldesi@unitn.it>"
+DESC="XWizard is xrandr based service for automatic configuration of monitors"
+BUILD_DIRS="usr/ etc/"
+DEPS=""
+# more conf fields are available, check:
+# http://www.debian.org/doc/debian-policy/ch-controlfields.html
+
+# create the destination folder tree
+mkdir -p usr/bin/
+cp xwizard usr/bin/
+
+mkdir -p etc/systemd/user/
+cp xwizard.service etc/systemd/user/
+
+# configuration part
+echo 2.0 > debian-binary
+echo '#!/bin/bash' > preinst
+echo '#!/bin/bash' > postinst
+echo '#!/bin/bash' > prerm
+echo '#!/bin/bash' > postrm
+
+cat > control << EOL
+Package: $PKG
+Version: $VER
+Section: $SECTION
+Priority: $PRIORITY
+Architecture: $ARCH
+Installed-Size: `du -ks $BUILD_DIRS | cut -f 1 | paste -sd+ - | bc`
+Maintainer: $MAINTAINER
+Build-Depends: $DEPS
+Description: $DESC
+EOL
+
+# pack everything together
+tar czf control.tar.gz control preinst postinst prerm postrm
+tar czf data.tar.gz $BUILD_DIRS
+ar -r "$PKG.deb" debian-binary control.tar.gz data.tar.gz
+
+# cleanup
+rm -rf $BUILD_DIRS debian-binary control control.tar.gz preinst postinst prerm postrm data.tar.gz

@@ -1,0 +1,11 @@
+[Unit]
+Description=XWizard automatically configure available monitors using xrandr
+# After=lightdm.service
+# Requires=lightdm.service
+
+[Service]
+TimeoutStartSec=1
+ExecStart=/usr/bin/xwizard
+
+[Install]
+WantedBy=default.target

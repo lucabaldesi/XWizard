@@ -1,0 +1,32 @@
+#!/bin/bash
+CONN_FILE="/tmp/xwizard"
+SLEEP_TIME=1
+
+while true; do
+	CONNECTED=$(xrandr | awk '/ connected/ {print $1}')
+	DISCONNECTED=$(xrandr | awk '/ disconnected/ {print $1}')
+
+	OLD_CONNECTED=$(cat $CONN_FILE 2> /dev/null)
+	echo $CONNECTED > $CONN_FILE
+
+	CMD_STR="xrandr"
+	prev=""
+	for dev in $CONNECTED; do
+		CMD_STR+=" --output $dev --auto"
+		if [ ! -z $prev ]; then
+			CMD_STR+=" --right-of $prev"
+		fi
+		prev=$dev
+	done
+	for dev in $DISCONNECTED; do
+		CMD_STR+=" --output $dev --off"
+	done
+
+	CONNECTED=$(echo $CONNECTED | tr " " "-")
+	OLD_CONNECTED=$(echo $OLD_CONNECTED | tr " " "-")
+	if [ "$CONNECTED" != "$OLD_CONNECTED" ]; then
+		echo $CMD_STR
+		$CMD_STR
+	fi
+	sleep $SLEEP_TIME
+done

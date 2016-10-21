@@ -1,0 +1,3 @@
+[INSTALLATION]
+Each interested user might enable the service at the start-up:
+$>systemctl --user enable xwizard.service
