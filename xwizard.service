@@ -1,7 +1,6 @@
 [Unit]
 Description=XWizard automatically configure available monitors using xrandr
-# After=lightdm.service
-# Requires=lightdm.service
+Wants=multi-user.target
 
 [Service]
 TimeoutStartSec=1

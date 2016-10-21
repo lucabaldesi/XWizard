@@ -3,6 +3,8 @@ CONN_FILE="/tmp/xwizard"
 SLEEP_TIME=1
 
 while true; do
+	DISP=$(ps e -u baldo | awk '/\/usr\/bin\/dbus-daemon / {gsub(/.*DISPLAY=/,""); gsub(/ .*/,""); print }' | head -1)
+	export DISPLAY=$DISP
 	CONNECTED=$(xrandr | awk '/ connected/ {print $1}')
 	DISCONNECTED=$(xrandr | awk '/ disconnected/ {print $1}')
 
