@@ -1,3 +1,14 @@
+XWizard is a simple service for monitor configuration running on top of systemd and xrandr.
+
+It is packaged for debian systems using the improper buildeb way [1].
+
 [INSTALLATION]
-Each interested user might enable the service at the start-up:
-$>systemctl --user enable xwizard.service
+# To build the deb package type:
+$> ./xwizard.buildeb
+$> sudo dpkg -i XWizard.deb
+$> systemctl --user start xwizard.service
+# Each interested user might enable the service at the start-up:
+$> systemctl --user enable xwizard.service
+
+
+[1] https://ans.disi.unitn.it/users/baldesi//ubuntu/bash/deb/2017/02/10/hello-deb.html
