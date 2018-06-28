@@ -1,6 +1,7 @@
 #!/bin/bash
 CONN_FILE="/tmp/xwizard"
 SLEEP_TIME=1
+export DISPLAY=:0
 
 while true; do
 	CONNECTED=$(xrandr | awk '/ connected/ {print $1}')
